@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -10,7 +10,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Zap, TrendingUp, Users, Menu, Linkedin, Twitter, Youtube, Building2, Shield, Search, Wallet, Lock, Settings, ShoppingCart, Palette, Video, Brain, Globe, Target } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useForm, ValidationError } from '@formspree/react';
+import { useForm, ValidationError } from '@formspree/react'
+import { AnimatedCard } from "@/components/ui/animated-card"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export default function Home() {
   const [state, handleSubmit] = useForm("meoqjrzl");
@@ -83,7 +86,8 @@ export default function Home() {
                   Innovative Government Solutions
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-300 md:text-lg">
-                  Optimizing public sector operations to deliver better services for citizens.
+                  Empowering governments and civic organizations
+                  to deliver exceptional public services
                 </p>
               </div>
               <div className="w-full max-w-[200px] space-y-2">
@@ -99,82 +103,107 @@ export default function Home() {
         <div className="h-px bg-gradient-to-r from-yellow-500 to-black"></div>
         <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-black">
           <div className="container mx-auto px-4 md:px-6 max-w-screen-xl">
-            <h2 className={`text-2xl ${thinnerFontClass} tracking-tighter sm:text-3xl md:text-4xl text-center mb-12 ${gradientTextClass}`}>Our Services</h2>
+            <h2 className={`text-2xl ${thinnerFontClass} tracking-tighter sm:text-3xl md:text-4xl text-center mb-12 ${gradientTextClass}`}>Services</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  icon: <Building2 className="h-8 w-8 text-yellow-500" />,
-                  title: "Strategic Consulting",
-                  description: "Expert guidance for public sector transformation and modernization with proven ROI"
-                },
-                {
-                  icon: <Shield className="h-8 w-8 text-yellow-500" />,
-                  title: "Risk Management & Investigations",
-                  description: "Complex fraud investigations, risk assessment, and mitigation strategies for government agencies"
-                },
-                {
-                  icon: <Search className="h-8 w-8 text-yellow-500" />,
-                  title: "Compliance & Oversight",
-                  description: "Comprehensive audits and quality assurance reviews to ensure regulatory compliance and operational integrity"
-                },
-                {
-                  icon: <Wallet className="h-8 w-8 text-yellow-500" />,
-                  title: "Financial Intelligence",
-                  description: "Advanced financial fraud detection, BSA/AML/KYC compliance, and cryptocurrency investigation services"
-                },
-                {
-                  icon: <Lock className="h-8 w-8 text-yellow-500" />,
-                  title: "Cybersecurity & Digital Forensics",
-                  description: "Protection of critical infrastructure with expert computer forensics and cyber intelligence"
-                },
-                {
-                  icon: <Settings className="h-8 w-8 text-yellow-500" />,
-                  title: "Process Optimization",
-                  description: "AI-powered automation and data-driven workflow improvements for enhanced operational efficiency"
-                },
-                {
-                  icon: <ShoppingCart className="h-8 w-8 text-yellow-500" />,
-                  title: "Procurement Integrity",
-                  description: "Anti-fraud measures and compliance protocols for government procurement systems"
-                },
-                {
-                  icon: <Palette className="h-8 w-8 text-yellow-500" />,
-                  title: "Content Development",
-                  description: "Professional technical writing, documentation, and strategic communications"
-                },
-                {
-                  icon: <Video className="h-8 w-8 text-yellow-500" />,
-                  title: "Digital Media Solutions",
-                  description: "Comprehensive multimedia production and content management for government communications"
-                },
-                {
-                  icon: <Brain className="h-8 w-8 text-yellow-500" />,
-                  title: "Advanced Analytics",
-                  description: "AI-powered data analysis and predictive modeling for informed decision-making"
-                },
-                {
-                  icon: <Globe className="h-8 w-8 text-yellow-500" />,
-                  title: "Technology Integration",
-                  description: "Seamless implementation of modern digital solutions and emerging technologies"
-                },
-                {
-                  icon: <Target className="h-8 w-8 text-yellow-500" />,
-                  title: "Program Management",
-                  description: "Strategic oversight of mission-critical initiatives with proven success in large-scale projects"
-                }
-              ].map((service, index) => (
-                <Card key={index} className="bg-neutral-900 border border-gray-700">
-                  <CardContent className="flex flex-col items-center p-6 space-y-4">
-                    <div className="w-16 h-16 rounded-full border border-gray-700 bg-gradient-to-b from-gray-800 to-black flex items-center justify-center">
-                      {service.icon}
-                    </div>
-                    <h3 className={`text-xl ${thinnerFontClass} text-center ${gradientTextClass}`}>{service.title}</h3>
-                    <p className="text-center text-gray-300">
-                      {service.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
+              <TooltipProvider>
+                {[
+                  {
+                    icon: <Building2 className="h-8 w-8 text-yellow-500" />,
+                    title: "Strategic Consulting",
+                    description: "Expert guidance for public sector transformation and modernization with proven ROI",
+                    tooltip: "Comprehensive consulting services backed by decades of government experience"
+                  },
+                  {
+                    icon: <Shield className="h-8 w-8 text-yellow-500" />,
+                    title: "Risk Management & Investigations",
+                    description: "Complex fraud investigations, risk assessment, and mitigation strategies for government agencies",
+                    tooltip: "Specialized services for managing government risks and ensuring compliance"
+                  },
+                  {
+                    icon: <Search className="h-8 w-8 text-yellow-500" />,
+                    title: "Compliance & Oversight",
+                    description: "Comprehensive audits and quality assurance reviews to ensure regulatory compliance and operational integrity",
+                    tooltip: "Ensuring government operations are in line with laws and regulations"
+                  },
+                  {
+                    icon: <Wallet className="h-8 w-8 text-yellow-500" />,
+                    title: "Financial Intelligence",
+                    description: "Advanced financial fraud detection, BSA/AML/KYC compliance, and cryptocurrency investigation services",
+                    tooltip: "Specialized services for managing financial risks and ensuring legal compliance"
+                  },
+                  {
+                    icon: <Lock className="h-8 w-8 text-yellow-500" />,
+                    title: "Cybersecurity & Digital Forensics",
+                    description: "Protection of critical infrastructure with expert computer forensics and cyber intelligence",
+                    tooltip: "Ensuring government systems are secure and protecting against cyber threats"
+                  },
+                  {
+                    icon: <Settings className="h-8 w-8 text-yellow-500" />,
+                    title: "Process Optimization",
+                    description: "AI-powered automation and data-driven workflow improvements for enhanced operational efficiency",
+                    tooltip: "Improving government processes through AI and data analysis"
+                  },
+                  {
+                    icon: <ShoppingCart className="h-8 w-8 text-yellow-500" />,
+                    title: "Procurement Integrity",
+                    description: "Anti-fraud measures and compliance protocols for government procurement systems",
+                    tooltip: "Ensuring government procurement is fair and compliant"
+                  },
+                  {
+                    icon: <Palette className="h-8 w-8 text-yellow-500" />,
+                    title: "Content Development",
+                    description: "Professional technical writing, documentation, and strategic communications",
+                    tooltip: "Creating high-quality government documents and communications"
+                  },
+                  {
+                    icon: <Video className="h-8 w-8 text-yellow-500" />,
+                    title: "Digital Media Solutions",
+                    description: "Comprehensive multimedia production and content management for government communications",
+                    tooltip: "Creating engaging government content through multimedia"
+                  },
+                  {
+                    icon: <Brain className="h-8 w-8 text-yellow-500" />,
+                    title: "Advanced Analytics",
+                    description: "AI-powered data analysis and predictive modeling for informed decision-making",
+                    tooltip: "Using AI to analyze data and make informed decisions"
+                  },
+                  {
+                    icon: <Globe className="h-8 w-8 text-yellow-500" />,
+                    title: "Technology Integration",
+                    description: "Seamless implementation of modern digital solutions and emerging technologies",
+                    tooltip: "Integrating new technologies into government operations"
+                  },
+                  {
+                    icon: <Target className="h-8 w-8 text-yellow-500" />,
+                    title: "Program Management",
+                    description: "Strategic oversight of mission-critical initiatives with proven success in large-scale projects",
+                    tooltip: "Managing large-scale government projects effectively"
+                  }
+                ].map((service, index) => (
+                  <Tooltip key={index}>
+                    <TooltipTrigger asChild>
+                      <div className="h-full">
+                        <Suspense fallback={<ServiceCardSkeleton />}>
+                          <AnimatedCard delay={index * 0.1} className="bg-neutral-900 border border-gray-700 hover:border-yellow-500/50 h-[280px] flex flex-col">
+                            <CardContent className="flex flex-col items-center p-6 space-y-4 h-full justify-between">
+                              <div className="w-16 h-16 rounded-full border border-gray-700 bg-gradient-to-b from-gray-800 to-black flex items-center justify-center">
+                                {service.icon}
+                              </div>
+                              <h3 className={`text-xl ${thinnerFontClass} text-center ${gradientTextClass}`}>{service.title}</h3>
+                              <p className="text-center text-gray-300 flex-1">
+                                {service.description}
+                              </p>
+                            </CardContent>
+                          </AnimatedCard>
+                        </Suspense>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{service.tooltip}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </TooltipProvider>
             </div>
           </div>
         </section>
@@ -193,13 +222,14 @@ export default function Home() {
                   Partner with Gregerscroft to bring cutting-edge solutions and efficiency to your government projects. With experience across multiple government agencies, advanced certifications in cybersecurity and fraud examination, and deep expertise in artificial intelligence, machine learning, and blockchain technologies, our proven track record ensures we deliver measurable results while maintaining the highest standards of compliance and security.
                 </p>
               </div>
-              <div className="relative h-[300px] md:h-[400px] bg-neutral-800 rounded-lg overflow-hidden">
+              <div className="relative aspect-square w-full rounded-lg overflow-hidden">
                 <Image
-                  src="/images/pexels-fauxels-3184357.jpg"
+                  src="/images/gregerscroft square.webp"
                   alt="About Gregerscroft"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg"
+                  width={600}
+                  height={600}
+                  className="rounded-lg w-full h-full"
+                  sizes="(max-width: 768px) 100vw, 600px"
                 />
               </div>
             </div>
@@ -372,6 +402,18 @@ export default function Home() {
           mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 80%, rgba(0, 0, 0, 0) 100%);
         }
       `}</style>
+    </div>
+  )
+}
+
+function ServiceCardSkeleton() {
+  return (
+    <div className="bg-neutral-900 border border-gray-700 rounded-lg p-6 h-[280px]">
+      <div className="flex flex-col items-center space-y-4 h-full justify-between">
+        <Skeleton className="w-16 h-16 rounded-full" />
+        <Skeleton className="h-6 w-3/4" />
+        <Skeleton className="h-20 w-full" />
+      </div>
     </div>
   )
 }
